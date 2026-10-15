@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "ADMIN";
+    }
+
+    // 1. USERS KOLEKSİYONU
+    // Kullanıcı kayıt olurken kendi belgesini oluşturabilir
+    // Adminler tüm kullanıcıları görebilir
+    // İşçiler kendi profilini görebilir
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update, delete: if isAdmin();
+    }
+
+    // 2. ATTENDANCE_LOGS KOLEKSİYONU
+    // İşçiler kendi loglarını oluşturup görebilir
+    // Adminler tüm logları ve fotoğrafları görebilir
+    match /attendance_logs/{logId} {
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == resource.data.worker_id || isAdmin());
+      
+      allow create: if isAuthenticated() && 
+        request.resource.data.worker_id == request.auth.uid;
+      
+      allow update, delete: if isAdmin();
+    }
+  }
+}

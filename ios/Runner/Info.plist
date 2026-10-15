@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>Vardiya PDKS</string>
+    <key>CFBundleDisplayName</key>
+    <string>Vardiya PDKS</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Kapıdaki QR kodun okunması ve vardiya giriş-çıkış teyidi için ön kameradan selfie çekilmesinde kameraya ihtiyaç duyulur.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Personel kimlik fotoğrafları için galeri erişimi gerekir.</string>
+</dict>
+</plist>
